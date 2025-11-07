@@ -1,1 +1,3 @@
 etl/sp500_yfinance_data.csv
+etl/test.csv
+.DS_Store
