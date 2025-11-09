@@ -1,42 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography } from '@mui/material';
-
-const mockData = [
-    { symbol: "AAPL", name: "Apple Inc.", gain: 3.45 },
-    { symbol: "MSFT", name: "Microsoft Corp.", gain: 2.78 },
-    { symbol: "GOOGL", name: "Alphabet Inc.", gain: 1.92 },
-    { symbol: "AMZN", name: "Amazon.com Inc.", gain: 4.12 },
-    { symbol: "TSLA", name: "Tesla Inc.", gain: 5.67 },
-    { symbol: "META", name: "Meta Platforms Inc.", gain: 3.89 },
-    { symbol: "NVDA", name: "NVIDIA Corp.", gain: 6.23 },
-    { symbol: "NFLX", name: "Netflix Inc.", gain: 2.34 },
-    { symbol: "ADBE", name: "Adobe Inc.", gain: 1.56 },
-    { symbol: "ORCL", name: "Oracle Corp.", gain: 2.87 }
-];
+import config from '../config.json';
 
 const HomePage = () => {
     const [stocks, setStocks] = useState([]);
     const [mode, setMode] = useState('gainers'); // 'gainers' or 'losers'
 
     useEffect(() => {
-        // Use mock data for development
-        if (process.env.NODE_ENV === 'development') {
-            setStocks(mockData);
-            return;
-        }
-
-        // Fetch stocks data based on the current mode
-        const fetchStocks = async () => {
-            try {
-                const response = await fetch(`/api/stocks?mode=${mode}`);
-                const data = await response.json();
-                setStocks(data);
-            } catch (error) {
-                console.error("Failed to fetch stocks:", error);
-            }
-        };
-
-        fetchStocks();
+        const endpoint = mode === 'gainers' ? 'gain' : 'decline';
+        fetch(`http://${config.server_host}:${config.server_port}/${endpoint}`)
+            .then(res => res.json())
+            .then(resJson => setStocks(resJson));
     }, [mode]);
 
     const toggleMode = () => {
@@ -64,16 +38,18 @@ const HomePage = () => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell><strong>Symbol</strong></TableCell>
-                            <TableCell><strong>Name</strong></TableCell>
+                            <TableCell><strong>Code</strong></TableCell>
+                            <TableCell><strong>Company</strong></TableCell>
+                            <TableCell align="right"><strong>Close Price</strong></TableCell>
                             <TableCell align="right"><strong>{mode === 'gainers' ? 'Gain (%)' : 'Loss (%)'}</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {stocks.map((stock) => (
-                            <TableRow key={stock.symbol}>
-                                <TableCell>{stock.symbol}</TableCell>
-                                <TableCell>{stock.name}</TableCell>
+                            <TableRow key={stock.code}>
+                                <TableCell>{stock.code}</TableCell>
+                                <TableCell>{stock.company}</TableCell>
+                                <TableCell align="right">${stock.close}</TableCell>
                                 <TableCell
                                     align="right"
                                     style={{
@@ -81,7 +57,7 @@ const HomePage = () => {
                                         fontWeight: 'bold'
                                     }}
                                 >
-                                    {mode === 'gainers' ? '↑' : '↓'} {stock.gain}%
+                                    {mode === 'gainers' ? '↑' : '↓'} {Math.abs(stock.percentage)}%
                                 </TableCell>
                             </TableRow>
                         ))}
