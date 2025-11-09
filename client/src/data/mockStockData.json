@@ -1,0 +1,144 @@
+{
+  "stocks": [
+    {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "priceIncrease": 5.2,
+      "currentPrice": 182.45,
+      "sentimentScore": 0.78
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc.",
+      "priceIncrease": 8.5,
+      "currentPrice": 142.30,
+      "sentimentScore": 0.65
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft Corp.",
+      "priceIncrease": 6.3,
+      "currentPrice": 378.91,
+      "sentimentScore": 0.82
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon.com Inc.",
+      "priceIncrease": 4.1,
+      "currentPrice": 156.78,
+      "sentimentScore": 0.71
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla Inc.",
+      "priceIncrease": 12.7,
+      "currentPrice": 248.50,
+      "sentimentScore": 0.55
+    },
+    {
+      "symbol": "META",
+      "name": "Meta Platforms Inc.",
+      "priceIncrease": 9.2,
+      "currentPrice": 512.33,
+      "sentimentScore": 0.68
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corp.",
+      "priceIncrease": 15.8,
+      "currentPrice": 875.28,
+      "sentimentScore": 0.91
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "priceIncrease": 3.4,
+      "currentPrice": 189.25,
+      "sentimentScore": 0.62
+    },
+    {
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "priceIncrease": 7.1,
+      "currentPrice": 265.45,
+      "sentimentScore": 0.75
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart Inc.",
+      "priceIncrease": 2.8,
+      "currentPrice": 167.89,
+      "sentimentScore": 0.58
+    },
+    {
+      "symbol": "DIS",
+      "name": "The Walt Disney Co.",
+      "priceIncrease": 5.9,
+      "currentPrice": 98.45,
+      "sentimentScore": 0.52
+    },
+    {
+      "symbol": "NFLX",
+      "name": "Netflix Inc.",
+      "priceIncrease": 10.3,
+      "currentPrice": 598.72,
+      "sentimentScore": 0.69
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices",
+      "priceIncrease": 11.5,
+      "currentPrice": 165.43,
+      "sentimentScore": 0.80
+    },
+    {
+      "symbol": "INTC",
+      "name": "Intel Corp.",
+      "priceIncrease": 1.9,
+      "currentPrice": 43.21,
+      "sentimentScore": 0.45
+    },
+    {
+      "symbol": "BA",
+      "name": "Boeing Co.",
+      "priceIncrease": 4.6,
+      "currentPrice": 195.67,
+      "sentimentScore": 0.48
+    },
+    {
+      "symbol": "COIN",
+      "name": "Coinbase Global Inc.",
+      "priceIncrease": 18.2,
+      "currentPrice": 234.55,
+      "sentimentScore": 0.63
+    },
+    {
+      "symbol": "SHOP",
+      "name": "Shopify Inc.",
+      "priceIncrease": 13.4,
+      "currentPrice": 78.92,
+      "sentimentScore": 0.72
+    },
+    {
+      "symbol": "UBER",
+      "name": "Uber Technologies Inc.",
+      "priceIncrease": 9.8,
+      "currentPrice": 68.34,
+      "sentimentScore": 0.67
+    },
+    {
+      "symbol": "SQ",
+      "name": "Block Inc.",
+      "priceIncrease": 14.1,
+      "currentPrice": 85.21,
+      "sentimentScore": 0.70
+    },
+    {
+      "symbol": "PLTR",
+      "name": "Palantir Technologies",
+      "priceIncrease": 16.9,
+      "currentPrice": 22.89,
+      "sentimentScore": 0.85
+    }
+  ]
+}

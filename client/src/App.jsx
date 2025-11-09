@@ -6,6 +6,9 @@ import './App.css'
 
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
+import SearchPage from './pages/SearchPage';
+import SearchPage2 from './pages/SearchPage2';
+import StockDetailPage from './pages/StockDetailPage';
 
 export const theme = createTheme({
   palette: {
@@ -22,8 +25,9 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/page2" element={<HomePage />} />
-          <Route path="/page3" element={<HomePage />} /> */}
+          <Route path="/page2" element={<SearchPage />} />
+          <Route path="/page3" element={<SearchPage2 />} />
+          <Route path="/stock-detail" element={<StockDetailPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
