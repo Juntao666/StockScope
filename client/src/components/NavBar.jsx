@@ -34,6 +34,7 @@ export default function NavBar() {
           <NavText href='/' text='STOCKSCOPE' isMain />
           <NavText href='/page2' text='PAGE2' />
           <NavText href='/page3' text='PAGE3' />
+          <NavText href='/stock-detail' text='STOCK-CHART' />
         </Toolbar>
       </Container>
     </AppBar>
