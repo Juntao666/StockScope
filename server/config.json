@@ -1,9 +1,9 @@
 {
-  "rds_host": "homework-db.cluster-ro-ctlq74kqmuns.us-east-1.rds.amazonaws.com",
+  "rds_host": "stock-scope-db.c70w6wygo752.us-east-1.rds.amazonaws.com",
   "rds_port": "5432",
-  "rds_user": "student",
-  "rds_password": "cis5500",
-  "rds_db": "swiftify",
+  "rds_user": "stock_scope",
+  "rds_password": "stock_scope_hahaha",
+  "rds_db": "stock_scope_db",
   "server_host": "localhost",
   "server_port": "8080"
 }
