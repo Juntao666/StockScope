@@ -5,6 +5,8 @@ const routes = require('./routes');
 const randomRoute = require('./randomRoute');
 const topRoute = require('./topRoute');
 const certainCompany = require("./certainCompany");
+const financeRoute = require("./financeRoute");
+const newsRoute = require("./newsRoute");
 
 const app = express();
 app.use(cors({
@@ -19,7 +21,9 @@ app.get('/decline', topRoute.decline);
 app.get('/intervalCloseK',topRoute.intervalCloseK);
 app.get('/stocks/rankings/highest-sentiment',topRoute.intervalSentimentK);
 app.get('/stocks/:code/prices', certainCompany.getStockPrices);
-app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment)
+app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment);
+app.get('/companies/top-revenue-growth',financeRoute.getTopRevenueGrowth);
+app.get('/stocks/news/3day-reaction',newsRoute.getBearishNewsAnd3DayImpact);
 
 // app.get('/song/:song_id', routes.song);
 // app.get('/album/:album_id', routes.album);
