@@ -4,6 +4,7 @@ const config = require('./config');
 const routes = require('./routes');
 const randomRoute = require('./randomRoute');
 const topRoute = require('./topRoute');
+const certainCompany = require("./certainCompany");
 
 const app = express();
 app.use(cors({
@@ -16,6 +17,10 @@ app.get('/random', randomRoute.random);
 app.get('/gain', topRoute.gain);
 app.get('/decline', topRoute.decline);
 app.get('/intervalCloseK',topRoute.intervalCloseK);
+app.get('/stocks/rankings/highest-sentiment',topRoute.intervalSentimentK);
+app.get('/stocks/:code/prices', certainCompany.getStockPrices);
+app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment)
+
 // app.get('/song/:song_id', routes.song);
 // app.get('/album/:album_id', routes.album);
 // app.get('/albums', routes.albums);
