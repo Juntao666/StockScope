@@ -120,9 +120,58 @@ const intervalCloseK = async function(req, res) {
   });
 }
 
+const intervalSentimentK = async function(req, res) {
+  let { start, end, k } = req.query;
+
+  const today = new Date();
+  if (!start) start = new Date('2025-01-01').getTime();
+  if (!end) end = today.getTime();
+  if (!k) k = 10;
+
+  const startDate = new Date(Number(start)).toISOString().slice(0, 10);
+  const endDate = new Date(Number(end)).toISOString().slice(0, 10);
+
+  const sql = `
+    WITH filtered AS (
+        SELECT 
+            ncs.company_code,
+            ncs.sentiment_score
+        FROM newscompanysentiment ncs
+        JOIN newsdetail nd 
+            ON ncs.news_id = nd.id
+        WHERE nd.timestamp BETWEEN $1 AND $2
+    )
+    SELECT 
+        company_code AS code,
+        ROUND(AVG(sentiment_score), 4) AS sentiment_score,
+        CASE 
+            WHEN AVG(sentiment_score) >= 0.35 THEN 'Bullish'
+            WHEN AVG(sentiment_score) >= 0.1 THEN 'Somewhat-Bullish'
+            WHEN AVG(sentiment_score) > -0.1 THEN 'Neutral'
+            WHEN AVG(sentiment_score) > -0.35 THEN 'Somewhat-Bearish'
+            ELSE 'Bearish'
+        END AS sentiment_level
+    FROM filtered
+    GROUP BY company_code
+    ORDER BY sentiment_score DESC
+    LIMIT $3;
+  `;
+
+  connection.query(sql, [startDate, endDate, k], (err, result) => {
+    if (err) {
+      console.error(err);
+      res.json({});
+    } else {
+      res.json(result.rows);
+    }
+  });
+};
+
+
 
 module.exports = {
   gain,
   decline,
-  intervalCloseK
+  intervalCloseK,
+  intervalSentimentK
 }
