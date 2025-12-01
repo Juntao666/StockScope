@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://stock-scope-db.c70w6wygo752.us-east-1.rds.amazonaws.com:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="imdb@homework-db.cluster-ro-ctlq74kqmuns.us-east-1.rds.amazonaws.com" uuid="4fc043a3-e466-45bd-85b1-330e9be6fd63">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://homework-db.cluster-ro-ctlq74kqmuns.us-east-1.rds.amazonaws.com:5432/imdb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
