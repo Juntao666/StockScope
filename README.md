@@ -19,7 +19,6 @@ StockScope is a full-stack web application designed to help investors and trader
 - React 19 with Vite
 - Material-UI (MUI) for UI components
 - React Router for navigation
-- TypeScript for enhanced type safety
 
 **Backend (Server):**
 
