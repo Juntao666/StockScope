@@ -11,6 +11,7 @@ import SearchPage2 from './pages/SearchPage2';
 import StockDetailPage from './pages/StockDetailPage';
 import NewsImpactPage from './pages/NewsImpactPage';
 import RandomStocksPage from './pages/RandomStocksPage';
+import SentimentRankingPage from './pages/SentimentRankingPage';
 
 export const theme = createTheme({
   palette: {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/stock-detail" element={<StockDetailPage />} />
           <Route path="/news-impact" element={<NewsImpactPage />} />
           <Route path="/random-stocks" element={<RandomStocksPage />} />
+          <Route path="/sentiment-ranking" element={<SentimentRankingPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

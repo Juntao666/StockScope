@@ -15,7 +15,7 @@ app.use(cors({
 
 // We use express to define our various API endpoints and
 // provide their handlers that we implemented in routes.js
-app.get('/random', randomRoute.random);//query 1
+app.get('/random', randomRoute.random);//query 1 done
 app.get('/gain', topRoute.gain);//query 2 done
 app.get('/decline', topRoute.decline); //query 3 done
 app.get('/intervalCloseK',topRoute.intervalCloseK); //query 4
