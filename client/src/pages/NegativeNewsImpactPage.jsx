@@ -100,7 +100,7 @@ const NegativeNewsImpactPage = () => {
             {/* Statistics Summary */}
             {!loading && events.length > 0 && (
                 <Grid container spacing={2} marginBottom="30px">
-                    <Grid item xs={12} sm={3}>
+                    <Grid size={{ xs: 12, sm: 3 }}>
                         <Card elevation={3} style={{ backgroundColor: '#ffebee' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#d32f2f' }}>
@@ -112,11 +112,11 @@ const NegativeNewsImpactPage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid size={{ xs: 12, sm: 3 }}>
                         <Card elevation={3} style={{ backgroundColor: '#fce4ec' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#c2185b' }}>
-                                    {Math.min(...events.map(e => e.three_day_return)).toFixed(2)}%
+                                    {Math.min(...events.map(e => parseFloat(e.three_day_return))).toFixed(2)}%
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     Worst 3-Day Drop
@@ -124,11 +124,11 @@ const NegativeNewsImpactPage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid size={{ xs: 12, sm: 3 }}>
                         <Card elevation={3} style={{ backgroundColor: '#f3e5f5' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#7b1fa2' }}>
-                                    {(events.reduce((sum, e) => sum + e.three_day_return, 0) / events.length).toFixed(2)}%
+                                    {(events.reduce((sum, e) => sum + parseFloat(e.three_day_return), 0) / events.length).toFixed(2)}%
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     Average Drop
@@ -136,11 +136,11 @@ const NegativeNewsImpactPage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid size={{ xs: 12, sm: 3 }}>
                         <Card elevation={3} style={{ backgroundColor: '#e8eaf6' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#3f51b5' }}>
-                                    {(events.reduce((sum, e) => sum + e.sentiment_score, 0) / events.length).toFixed(3)}
+                                    {(events.reduce((sum, e) => sum + parseFloat(e.sentiment_score), 0) / events.length).toFixed(3)}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     Avg Sentiment Score
@@ -279,7 +279,7 @@ const NegativeNewsImpactPage = () => {
                                                         color: sentimentSeverity.color,
                                                     }}
                                                 >
-                                                    {event.sentiment_score.toFixed(3)}
+                                                    {parseFloat(event.sentiment_score).toFixed(3)}
                                                 </Typography>
                                                 <Typography variant="caption" style={{ color: sentimentSeverity.color }}>
                                                     {sentimentSeverity.label}
@@ -322,7 +322,7 @@ const NegativeNewsImpactPage = () => {
                                                     }}
                                                 >
                                                     <TrendingDownIcon style={{ marginRight: '4px', fontSize: '1rem' }} />
-                                                    {event.three_day_return.toFixed(2)}%
+                                                    {parseFloat(event.three_day_return).toFixed(2)}%
                                                 </Box>
                                                 <Typography 
                                                     variant="caption" 
@@ -378,7 +378,7 @@ const NegativeNewsImpactPage = () => {
 
             {/* Information Section */}
             <Grid container spacing={3} marginTop="30px">
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Card elevation={2} style={{ backgroundColor: '#ffebee', height: '100%' }}>
                         <CardContent>
                             <Typography variant="h6" gutterBottom style={{ fontWeight: 'bold', color: '#d32f2f' }}>
@@ -445,7 +445,7 @@ const NegativeNewsImpactPage = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Card elevation={2} style={{ backgroundColor: '#e8eaf6', height: '100%' }}>
                         <CardContent>
                             <Typography variant="h6" gutterBottom style={{ fontWeight: 'bold', color: '#3f51b5' }}>
