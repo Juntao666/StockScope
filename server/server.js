@@ -24,7 +24,7 @@ app.get('/stocks/:code/prices', certainCompany.getStockPrices);//query 12 Jeff
 app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment);//query 13 Jeff
 app.get('/companies/top-revenue-growth',financeRoute.getTopRevenueGrowth);//query 10 Jack
 app.get('/stocks/news/3day-reaction',newsRoute.getBearishNewsAnd3DayImpact);//query 9 Jeff
-app.get('/stocks/sentiment/trends',newsRoute.getBearishNewsAnd3DayImpact);//query 8 <Problmatic>
+app.get('/stocks/sentiment/trends',newsRoute.getSentimentTrend);//query 8 <Problmatic>
 app.get('/stocks/news/volume-spike',newsRoute.getMajorNewsVolumeSpikes); //query 7 Jack
 app.get('/stocks/news/negative-impact',newsRoute.getNegativeNewsWithPriceDrop);//query 6 Jack
 app.get('/stocks/:code/financials',newsRoute.getCompanyFinancials);//query 5 Jeff
