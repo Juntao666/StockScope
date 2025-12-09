@@ -14,6 +14,7 @@ import RandomStocksPage from './pages/RandomStocksPage';
 import SentimentRankingPage from './pages/SentimentRankingPage';
 import RevenueGrowthPage from './pages/RevenueGrowthPage';
 import NewsVolumeSpikePage from './pages/NewsVolumeSpikePage';
+import NegativeNewsImpactPage from './pages/NegativeNewsImpactPage';
 
 export const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/sentiment-ranking" element={<SentimentRankingPage />} />
           <Route path="/revenue-growth" element={<RevenueGrowthPage />} />
           <Route path="/news-volume-spike" element={<NewsVolumeSpikePage />} />
+          <Route path="/negative-news-impact" element={<NegativeNewsImpactPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
