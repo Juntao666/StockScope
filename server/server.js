@@ -16,18 +16,18 @@ app.use(cors({
 // We use express to define our various API endpoints and
 // provide their handlers that we implemented in routes.js
 app.get('/random', randomRoute.random);//query 1
-app.get('/gain', topRoute.gain);//query 2
-app.get('/decline', topRoute.decline); //query 3
+app.get('/gain', topRoute.gain);//query 2 done
+app.get('/decline', topRoute.decline); //query 3 done
 app.get('/intervalCloseK',topRoute.intervalCloseK); //query 4
-app.get('/stocks/rankings/highest-sentiment',topRoute.intervalSentimentK);//query 11
-app.get('/stocks/:code/prices', certainCompany.getStockPrices);//query 12
-app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment);//query 13
-app.get('/companies/top-revenue-growth',financeRoute.getTopRevenueGrowth);//query 10
-app.get('/stocks/news/3day-reaction',newsRoute.getBearishNewsAnd3DayImpact);//query 9
-app.get('/stocks/sentiment/trends',newsRoute.getBearishNewsAnd3DayImpact);//query 8
-app.get('/stocks/news/volume-spike',newsRoute.getMajorNewsVolumeSpikes); //query 7
-app.get('/stocks/news/negative-impact',newsRoute.getNegativeNewsWithPriceDrop);//query 6
-app.get('/stocks/:code/financials',newsRoute.getCompanyFinancials);//query 5
+app.get('/stocks/rankings/highest-sentiment',topRoute.intervalSentimentK);//query 11 Jack
+app.get('/stocks/:code/prices', certainCompany.getStockPrices);//query 12 Jeff
+app.get('/stocks/:code/sentiment',certainCompany.getStockSentiment);//query 13 Jeff
+app.get('/companies/top-revenue-growth',financeRoute.getTopRevenueGrowth);//query 10 Jack
+app.get('/stocks/news/3day-reaction',newsRoute.getBearishNewsAnd3DayImpact);//query 9 Jeff
+app.get('/stocks/sentiment/trends',newsRoute.getBearishNewsAnd3DayImpact);//query 8 <Problmatic>
+app.get('/stocks/news/volume-spike',newsRoute.getMajorNewsVolumeSpikes); //query 7 Jack
+app.get('/stocks/news/negative-impact',newsRoute.getNegativeNewsWithPriceDrop);//query 6 Jack
+app.get('/stocks/:code/financials',newsRoute.getCompanyFinancials);//query 5 Jeff
 
 
 // app.get('/song/:song_id', routes.song);
