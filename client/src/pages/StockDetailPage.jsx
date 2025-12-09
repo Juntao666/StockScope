@@ -30,16 +30,11 @@ const StockDetailPage = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Calculate default dates (last 30 days)
-  const today = new Date();
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-  // State
-  const [symbol, setSymbol] = useState(searchParams.get('symbol') || '');
+  // State - use fixed 2024 dates since we have data until Dec 2024
   const [inputSymbol, setInputSymbol] = useState(searchParams.get('symbol') || '');
-  const [startDate, setStartDate] = useState(formatDate(thirtyDaysAgo));
-  const [endDate, setEndDate] = useState(formatDate(today));
+  const [symbol, setSymbol] = useState('');
+  const [startDate, setStartDate] = useState('2024-11-09');
+  const [endDate, setEndDate] = useState('2024-12-09');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [stockData, setStockData] = useState(null);
@@ -53,6 +48,7 @@ const StockDetailPage = () => {
       setInputSymbol(urlSymbol);
       fetchStockData(urlSymbol, startDate, endDate);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch stock data from backend
@@ -61,19 +57,26 @@ const StockDetailPage = () => {
     const startTimestamp = new Date(start).getTime();
     const endTimestamp = new Date(end).getTime();
 
+    const url = `${baseURL}/stocks/${stockSymbol}/prices?start=${startTimestamp}&end=${endTimestamp}`;
+    console.log('Fetching from URL:', url);
+    console.log('Stock Symbol:', stockSymbol);
+    console.log('Date Range:', start, 'to', end);
+    console.log('Timestamps:', startTimestamp, 'to', endTimestamp);
+
     setLoading(true);
     setError('');
 
     try {
-      const response = await fetch(
-        `${baseURL}/stocks/${stockSymbol}/prices?start=${startTimestamp}&end=${endTimestamp}`
-      );
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error('Failed to fetch stock data');
       }
 
       const data = await response.json();
+
+      console.log('Received data from backend:', data);
+      console.log('Data length:', data?.length);
 
       if (!data || data.length === 0) {
         setError(`No data found for symbol "${stockSymbol}"`);
@@ -97,9 +100,10 @@ const StockDetailPage = () => {
       // Calculate current price and price change
       const latestData = sortedData[sortedData.length - 1];
       const previousData = sortedData[sortedData.length - 2];
-      const currentPrice = latestData.close;
-      const priceChange = previousData ? currentPrice - previousData.close : 0;
-      const priceChangePercent = previousData ? (priceChange / previousData.close) * 100 : 0;
+      const currentPrice = parseFloat(latestData.close);
+      const previousPrice = previousData ? parseFloat(previousData.close) : currentPrice;
+      const priceChange = previousData ? currentPrice - previousPrice : 0;
+      const priceChangePercent = previousData ? (priceChange / previousPrice) * 100 : 0;
 
       setStockData({
         symbol: stockSymbol.toUpperCase(),
