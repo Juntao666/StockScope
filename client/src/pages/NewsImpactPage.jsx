@@ -154,19 +154,19 @@ const NewsImpactPage = () => {
                       </TableCell>
                       <TableCell align="center">
                         <Chip
-                          label={item.sentiment_score?.toFixed(2) || 'N/A'}
+                          label={item.sentiment_score ? parseFloat(item.sentiment_score).toFixed(2) : 'N/A'}
                           color={getSentimentColor(item.sentiment_score)}
                           size="small"
                         />
                       </TableCell>
                       <TableCell align="right">
                         <Typography variant="body2">
-                          ${item.price_at_news?.toFixed(2) || 'N/A'}
+                          ${item.price_at_news ? parseFloat(item.price_at_news).toFixed(2) : 'N/A'}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
                         <Typography variant="body2">
-                          ${item.price_3days_later?.toFixed(2) || 'N/A'}
+                          ${item.price_3days_later ? parseFloat(item.price_3days_later).toFixed(2) : 'N/A'}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
@@ -176,7 +176,7 @@ const NewsImpactPage = () => {
                           color={getPriceChangeColor(item.price_change_pct)}
                         >
                           {item.price_change_pct > 0 ? '+' : ''}
-                          {item.price_change_pct?.toFixed(2) || 'N/A'}%
+                          {item.price_change_pct ? parseFloat(item.price_change_pct).toFixed(2) : 'N/A'}%
                         </Typography>
                       </TableCell>
                     </TableRow>
