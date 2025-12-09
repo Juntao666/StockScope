@@ -17,7 +17,6 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import StockCard from '../components/StockCard';
-import mockStockData from '../data/mockStockData.json';
 
 const SearchPage2 = () => {
   // Helper function to format date as YYYY-MM-DD
@@ -47,24 +46,81 @@ const SearchPage2 = () => {
     { value: 'sentimentScore', label: 'Highest Sentiment Score' },
   ];
 
-  // PLACEHOLDER: Replace this with actual API call to your backend
   const fetchTopStocks = async (start, end, metricType, k) => {
-    // TODO: Replace with actual backend endpoint
-    // Example: const response = await fetch(`http://your-backend-url/api/top-stocks?startDate=${start}&endDate=${end}&metric=${metricType}&k=${k}`);
+    const baseURL = 'http://localhost:8080';
 
-    // Simulating API call delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+    // Convert YYYY-MM-DD dates to timestamps (milliseconds)
+    const startTimestamp = new Date(start).getTime();
+    const endTimestamp = new Date(end).getTime();
 
-    // Using mock data and sorting by selected metric
-    const sortedStocks = [...mockStockData.stocks].sort((a, b) => b[metricType] - a[metricType]);
-    const topStocks = sortedStocks.slice(0, k);
+    try {
+      let response;
+      let data;
 
-    return {
-      stocks: topStocks,
-      metric: metricType,
-      period: { start, end },
-      count: topStocks.length,
-    };
+      // Route to appropriate endpoint based on metric type
+      switch (metricType) {
+        case 'priceIncrease':
+          // Note: /gain endpoint returns top 10 from latest date only
+          // Does not support custom date ranges or K parameter
+          response = await fetch(`${baseURL}/gain`);
+          if (!response.ok) throw new Error('Failed to fetch gain data');
+          data = await response.json();
+
+          // Transform data: {code, percentage, close, company} -> {symbol, name, priceIncrease}
+          return {
+            stocks: data.slice(0, k).map(item => ({
+              symbol: item.code,
+              name: item.company || item.code,
+              priceIncrease: item.percentage,
+              currentPrice: item.close
+            })),
+            metric: metricType,
+            period: { start, end },
+            count: Math.min(data.length, k),
+          };
+
+        case 'currentPrice':
+          response = await fetch(`${baseURL}/intervalCloseK?start=${startTimestamp}&end=${endTimestamp}&k=${k}`);
+          if (!response.ok) throw new Error('Failed to fetch price data');
+          data = await response.json();
+
+          // Transform data: {code, avg_close} -> {symbol, name, currentPrice}
+          return {
+            stocks: data.map(item => ({
+              symbol: item.code,
+              name: item.code, // Backend doesn't return company name for this endpoint
+              currentPrice: item.avg_close
+            })),
+            metric: metricType,
+            period: { start, end },
+            count: data.length,
+          };
+
+        case 'sentimentScore':
+          response = await fetch(`${baseURL}/stocks/rankings/highest-sentiment?start=${startTimestamp}&end=${endTimestamp}&k=${k}`);
+          if (!response.ok) throw new Error('Failed to fetch sentiment data');
+          data = await response.json();
+
+          // Transform data: {code, sentiment_score, sentiment_level} -> {symbol, name, sentimentScore}
+          return {
+            stocks: data.map(item => ({
+              symbol: item.code,
+              name: item.code, // Backend doesn't return company name for this endpoint
+              sentimentScore: item.sentiment_score,
+              sentimentLevel: item.sentiment_level
+            })),
+            metric: metricType,
+            period: { start, end },
+            count: data.length,
+          };
+
+        default:
+          throw new Error('Invalid metric type');
+      }
+    } catch (error) {
+      console.error('Error fetching top stocks:', error);
+      throw error;
+    }
   };
 
   const handleSearch = async () => {

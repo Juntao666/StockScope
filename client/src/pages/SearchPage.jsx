@@ -34,32 +34,39 @@ const SearchPage = () => {
   const [error, setError] = useState('');
   const [searchResults, setSearchResults] = useState(null);
 
-  // PLACEHOLDER: Replace this with actual API call to your backend
   const fetchStockData = async (symbol, start, end) => {
-    // TODO: Replace with actual backend endpoint
-    // Example: const response = await fetch(`http://your-backend-url/api/stocks/${symbol}?start=${start}&end=${end}`);
+    const baseURL = 'http://localhost:8080';
 
-    // Simulating API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Convert YYYY-MM-DD dates to timestamps (milliseconds)
+    const startTimestamp = new Date(start).getTime();
+    const endTimestamp = new Date(end).getTime();
 
-    // PLACEHOLDER DATA - Replace with actual API response
-    return {
-      symbol: symbol.toUpperCase(),
-      companyName: `${symbol.toUpperCase()} Inc.`,
-      stockPrices: [
-        { date: start, price: 150.25, volume: 1000000 },
-        { date: end, price: 155.75, volume: 1200000 },
-      ],
-      sentimentScore: 0.72, // Score between -1 and 1
-      earnings: {
-        estimated: 2.45,
-        actual: 2.50,
-      },
-      revenue: {
-        estimated: 85.3, // in billions
-        actual: 87.1,
-      },
-    };
+    try {
+      // Fetch stock prices and sentiment in parallel
+      const [pricesResponse, sentimentResponse] = await Promise.all([
+        fetch(`${baseURL}/stocks/${symbol}/prices?start=${startTimestamp}&end=${endTimestamp}`),
+        fetch(`${baseURL}/stocks/${symbol}/sentiment?start=${startTimestamp}&end=${endTimestamp}`)
+      ]);
+
+      if (!pricesResponse.ok || !sentimentResponse.ok) {
+        throw new Error('Failed to fetch data from backend');
+      }
+
+      const pricesData = await pricesResponse.json();
+      const sentimentData = await sentimentResponse.json();
+
+      // Transform the data to match the UI's expected format
+      return {
+        symbol: symbol.toUpperCase(),
+        companyName: `${symbol.toUpperCase()}`,
+        stockPrices: pricesData, // Array of {date, open, close, high, low}
+        sentimentScore: sentimentData.sentiment_score || 0,
+        sentimentLevel: sentimentData.sentiment_level || 'N/A'
+      };
+    } catch (error) {
+      console.error('Error fetching stock data:', error);
+      throw error;
+    }
   };
 
   const handleSearch = async () => {
@@ -105,7 +112,7 @@ const SearchPage = () => {
           Stock Search
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Search for a company's stock price, sentiment score, and financial estimates
+          Search for a company's stock price and sentiment analysis
         </Typography>
       </Box>
 
@@ -184,73 +191,53 @@ const SearchPage = () => {
             {/* Results Grid */}
             <Grid container spacing={4} justifyContent="space-evenly">
               {/* Stock Price */}
-              <Grid item xs={12} md={3.5}>
+              <Grid item xs={12} md={5}>
                 <Box>
                   <Typography variant="h6" gutterBottom color="primary">
                     Stock Price
                   </Typography>
                   <Box sx={{ mt: 2 }}>
                     <Typography variant="body2" color="text.secondary">
-                      Starting Price:
+                      Starting Price (Close):
                     </Typography>
                     <Typography variant="h5">
-                      ${searchResults.stockPrices[0]?.price.toFixed(2)}
+                      ${searchResults.stockPrices[searchResults.stockPrices.length - 1]?.close?.toFixed(2) || 'N/A'}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                      Ending Price:
+                      Ending Price (Close):
                     </Typography>
                     <Typography variant="h5">
-                      ${searchResults.stockPrices[searchResults.stockPrices.length - 1]?.price.toFixed(2)}
+                      ${searchResults.stockPrices[0]?.close?.toFixed(2) || 'N/A'}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                      Price Range:
+                    </Typography>
+                    <Typography variant="body1">
+                      High: ${searchResults.stockPrices[0]?.high?.toFixed(2) || 'N/A'} /
+                      Low: ${searchResults.stockPrices[0]?.low?.toFixed(2) || 'N/A'}
                     </Typography>
                   </Box>
                 </Box>
               </Grid>
 
               {/* Sentiment Score */}
-              <Grid item xs={12} md={3.5}>
+              <Grid item xs={12} md={5}>
                 <Box>
                   <Typography variant="h6" gutterBottom color="primary">
-                    Sentiment Score
+                    Sentiment Analysis
                   </Typography>
                   <Box sx={{ mt: 2, textAlign: 'center' }}>
                     <Typography
                       variant="h3"
-                      color={searchResults.sentimentScore > 0 ? 'success.main' : 'error.main'}
+                      color={searchResults.sentimentScore > 0 ? 'success.main' : searchResults.sentimentScore < 0 ? 'error.main' : 'text.secondary'}
                     >
-                      {searchResults.sentimentScore.toFixed(2)}
+                      {searchResults.sentimentScore?.toFixed(2) || 'N/A'}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Range: -1 (Negative) to +1 (Positive)
                     </Typography>
-                  </Box>
-                </Box>
-              </Grid>
-
-              {/* Earnings & Revenue */}
-              <Grid item xs={12} md={3.5}>
-                <Box>
-                  <Typography variant="h6" gutterBottom color="primary">
-                    Financial Estimates
-                  </Typography>
-                  <Box sx={{ mt: 2 }}>
-                    <Typography variant="subtitle2" gutterBottom>
-                      Earnings Per Share
-                    </Typography>
-                    <Typography variant="body2">
-                      Estimated: ${searchResults.earnings.estimated}
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 2 }}>
-                      Actual: ${searchResults.earnings.actual}
-                    </Typography>
-
-                    <Typography variant="subtitle2" gutterBottom>
-                      Revenue (Billions)
-                    </Typography>
-                    <Typography variant="body2">
-                      Estimated: ${searchResults.revenue.estimated}B
-                    </Typography>
-                    <Typography variant="body2">
-                      Actual: ${searchResults.revenue.actual}B
+                    <Typography variant="h6" sx={{ mt: 2 }} color="primary">
+                      {searchResults.sentimentLevel}
                     </Typography>
                   </Box>
                 </Box>
