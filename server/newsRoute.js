@@ -32,7 +32,7 @@ const getBearishNewsAnd3DayImpact = async function(req, res) {
         AND s1.date = DATE(nd.timestamp)
     LEFT JOIN Stock s2 ON c.code = s2.code
         AND s2.date = DATE(nd.timestamp) + INTERVAL '3 days'
-    WHERE nd.timestamp > CURRENT_TIMESTAMP - INTERVAL '30 days'
+    WHERE nd.timestamp > TIMESTAMP '2025-11-06' - INTERVAL '30 days'
       AND ncs.sentiment_score < -0.3
       AND s2.close IS NOT NULL
     ORDER BY ncs.sentiment_score ASC, nd.timestamp DESC, price_change_pct
@@ -48,6 +48,7 @@ const getBearishNewsAnd3DayImpact = async function(req, res) {
     }
   });
 };
+
 
 const getSentimentTrend = async function(req, res) {
 
