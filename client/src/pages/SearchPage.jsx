@@ -22,14 +22,10 @@ const SearchPage = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Calculate default dates
-  const today = new Date();
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
+  // Use fixed 2024 dates since we have data until Dec 2024
   const [companySymbol, setCompanySymbol] = useState('');
-  const [startDate, setStartDate] = useState(formatDate(oneMonthAgo));
-  const [endDate, setEndDate] = useState(formatDate(today));
+  const [startDate, setStartDate] = useState('2024-11-09');
+  const [endDate, setEndDate] = useState('2024-12-09');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchResults, setSearchResults] = useState(null);

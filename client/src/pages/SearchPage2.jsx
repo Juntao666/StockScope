@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   TextField,
@@ -27,18 +27,21 @@ const SearchPage2 = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // Calculate default dates
-  const today = new Date();
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-  const [startDate, setStartDate] = useState(formatDate(oneMonthAgo));
-  const [endDate, setEndDate] = useState(formatDate(today));
+  // Use fixed 2024 dates since we have data until Dec 2024
+  const [startDate, setStartDate] = useState('2024-11-09');
+  const [endDate, setEndDate] = useState('2024-12-09');
   const [metric, setMetric] = useState('priceIncrease');
   const [topK, setTopK] = useState(10);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [searchResults, setSearchResults] = useState(null);
+
+  // Auto-cap topK to 10 when switching to priceIncrease metric
+  useEffect(() => {
+    if (metric === 'priceIncrease' && topK > 10) {
+      setTopK(10);
+    }
+  }, [metric, topK]);
 
   const metricOptions = [
     { value: 'priceIncrease', label: 'Highest Price Increase (%)' },
@@ -133,8 +136,10 @@ const SearchPage2 = () => {
       setError('Start date must be before end date');
       return;
     }
-    if (topK < 1 || topK > 50) {
-      setError('Please enter a value between 1 and 50 for top K stocks');
+    // Price Increase metric only supports top 10 due to backend limitation
+    const maxK = metric === 'priceIncrease' ? 10 : 50;
+    if (topK < 1 || topK > maxK) {
+      setError(`Please enter a value between 1 and ${maxK} for top K stocks`);
       return;
     }
 
@@ -239,8 +244,13 @@ const SearchPage2 = () => {
                 label="Top K"
                 type="number"
                 value={topK}
-                onChange={(e) => setTopK(parseInt(e.target.value) || 0)}
-                inputProps={{ min: 1, max: 50 }}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value) || 0;
+                  const maxK = metric === 'priceIncrease' ? 10 : 50;
+                  setTopK(Math.min(value, maxK));
+                }}
+                inputProps={{ min: 1, max: metric === 'priceIncrease' ? 10 : 50 }}
+                helperText={metric === 'priceIncrease' ? 'Max 10 for this metric' : ''}
                 disabled={loading}
               />
             </Grid>
