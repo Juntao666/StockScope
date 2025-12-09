@@ -56,11 +56,20 @@ const SearchPage = () => {
       const sentimentData = await sentimentResponse.json();
 
       // Transform the data to match the UI's expected format
+      // Parse string values to numbers
+      const parsedPrices = pricesData.map(item => ({
+        date: item.date,
+        open: parseFloat(item.open),
+        close: parseFloat(item.close),
+        high: parseFloat(item.high),
+        low: parseFloat(item.low)
+      }));
+
       return {
         symbol: symbol.toUpperCase(),
         companyName: `${symbol.toUpperCase()}`,
-        stockPrices: pricesData, // Array of {date, open, close, high, low}
-        sentimentScore: sentimentData.sentiment_score || 0,
+        stockPrices: parsedPrices,
+        sentimentScore: parseFloat(sentimentData.sentiment_score) || 0,
         sentimentLevel: sentimentData.sentiment_level || 'N/A'
       };
     } catch (error) {

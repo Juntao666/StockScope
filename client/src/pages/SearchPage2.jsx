@@ -71,8 +71,8 @@ const SearchPage2 = () => {
             stocks: data.slice(0, k).map(item => ({
               symbol: item.code,
               name: item.company || item.code,
-              priceIncrease: item.percentage,
-              currentPrice: item.close
+              priceIncrease: parseFloat(item.percentage),
+              currentPrice: parseFloat(item.close)
             })),
             metric: metricType,
             period: { start, end },
@@ -89,7 +89,7 @@ const SearchPage2 = () => {
             stocks: data.map(item => ({
               symbol: item.code,
               name: item.code, // Backend doesn't return company name for this endpoint
-              currentPrice: item.avg_close
+              currentPrice: parseFloat(item.avg_close)
             })),
             metric: metricType,
             period: { start, end },
@@ -106,7 +106,7 @@ const SearchPage2 = () => {
             stocks: data.map(item => ({
               symbol: item.code,
               name: item.code, // Backend doesn't return company name for this endpoint
-              sentimentScore: item.sentiment_score,
+              sentimentScore: parseFloat(item.sentiment_score),
               sentimentLevel: item.sentiment_level
             })),
             metric: metricType,
