@@ -39,6 +39,7 @@ export default function NavBar() {
           <NavText href='/random-stocks' text='RANDOM' />
           <NavText href='/sentiment-ranking' text='SENTIMENT' />
           <NavText href='/revenue-growth' text='REVENUE' />
+          <NavText href='/news-volume-spike' text='VOLUME-SPIKE' />
         </Toolbar>
       </Container>
     </AppBar>
