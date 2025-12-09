@@ -36,6 +36,7 @@ export default function NavBar() {
           <NavText href='/page3' text='PAGE3' />
           <NavText href='/stock-detail' text='STOCK-CHART' />
           <NavText href='/news-impact' text='NEWS-IMPACT' />
+          <NavText href='/random-stocks' text='RANDOM' />
         </Toolbar>
       </Container>
     </AppBar>
