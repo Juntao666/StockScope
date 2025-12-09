@@ -38,6 +38,7 @@ export default function NavBar() {
           <NavText href='/news-impact' text='NEWS-IMPACT' />
           <NavText href='/random-stocks' text='RANDOM' />
           <NavText href='/sentiment-ranking' text='SENTIMENT' />
+          <NavText href='/revenue-growth' text='REVENUE' />
         </Toolbar>
       </Container>
     </AppBar>
