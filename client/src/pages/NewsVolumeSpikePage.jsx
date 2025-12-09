@@ -125,7 +125,7 @@ const NewsVolumeSpikeOage = () => {
             {/* Statistics Summary */}
             {!loading && events.length > 0 && (
                 <Grid container spacing={2} marginBottom="30px">
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <Card elevation={3} style={{ backgroundColor: '#e3f2fd' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#1976d2' }}>
@@ -137,11 +137,11 @@ const NewsVolumeSpikeOage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <Card elevation={3} style={{ backgroundColor: '#fff3e0' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#f57c00' }}>
-                                    {Math.max(...events.map(e => e.volume_spike_ratio)).toFixed(2)}x
+                                    {Math.max(...events.map(e => parseFloat(e.volume_spike_ratio))).toFixed(2)}x
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     Highest Volume Spike
@@ -149,11 +149,11 @@ const NewsVolumeSpikeOage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid size={{ xs: 12, sm: 4 }}>
                         <Card elevation={3} style={{ backgroundColor: '#f3e5f5' }}>
                             <CardContent>
                                 <Typography variant="h6" style={{ fontWeight: 'bold', color: '#7b1fa2' }}>
-                                    {(events.reduce((sum, e) => sum + e.volume_spike_ratio, 0) / events.length).toFixed(2)}x
+                                    {(events.reduce((sum, e) => sum + parseFloat(e.volume_spike_ratio), 0) / events.length).toFixed(2)}x
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     Average Volume Spike
@@ -252,7 +252,7 @@ const NewsVolumeSpikeOage = () => {
                                         </TableCell>
                                         <TableCell align="center">
                                             <Chip
-                                                label={`${getSentimentLabel(event.sentiment_score)} (${event.sentiment_score.toFixed(2)})`}
+                                                label={`${getSentimentLabel(event.sentiment_score)} (${parseFloat(event.sentiment_score).toFixed(2)})`}
                                                 color={getSentimentColor(event.sentiment_score)}
                                                 size="small"
                                                 style={{ fontWeight: 'bold' }}
@@ -303,7 +303,7 @@ const NewsVolumeSpikeOage = () => {
                                                     <WarningIcon style={{ marginRight: '4px', fontSize: '1rem' }} />
                                                 )}
                                                 <TrendingUpIcon style={{ marginRight: '4px', fontSize: '1rem' }} />
-                                                {event.volume_spike_ratio.toFixed(2)}x
+                                                {parseFloat(event.volume_spike_ratio).toFixed(2)}x
                                             </Box>
                                             <Typography variant="caption" display="block" style={{ marginTop: '4px' }}>
                                                 {spikeSeverity.label}
@@ -339,7 +339,7 @@ const NewsVolumeSpikeOage = () => {
 
             {/* Information Section */}
             <Grid container spacing={3} marginTop="30px">
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Card elevation={2} style={{ backgroundColor: '#e8f5e9', height: '100%' }}>
                         <CardContent>
                             <Typography variant="h6" gutterBottom style={{ fontWeight: 'bold', color: '#2e7d32' }}>
@@ -406,7 +406,7 @@ const NewsVolumeSpikeOage = () => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Card elevation={2} style={{ backgroundColor: '#fff3e0', height: '100%' }}>
                         <CardContent>
                             <Typography variant="h6" gutterBottom style={{ fontWeight: 'bold', color: '#e65100' }}>
