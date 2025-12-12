@@ -40,7 +40,6 @@ Before you begin, ensure you have the following installed:
 
 - **Node.js** (v16 or higher)
 - **npm** (comes with Node.js)
-- **PostgreSQL** (if using PostgreSQL database)
 
 ### Installation & Setup
 
